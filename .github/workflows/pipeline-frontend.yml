@@ -27,10 +27,13 @@ jobs:
               username: ${{github.actor}}
               password: ${{secrets.GITHUB_TOKEN}}
 
-          - name: 'Build Inventory Image'
-            run: |
-              docker build --no-cache -f ../docker/backend/Dockerfile . --tag ghcr.io/karimdevwm/book-network-ui:latest
-              docker push ghcr.io/karimdevwm/book-network-ui:latest
+          - name: 'Build and push Image'
+            uses: docker/build-push-action@v5
+            with:
+              context: book-network
+              file: docker/frontend/Dockerfile
+              push: true
+              tags: ghcr.io/karimdevwm/book-network-ui:latest
             
     deploy:
         needs: push-store-image
