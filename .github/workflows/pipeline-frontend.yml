@@ -39,7 +39,7 @@ jobs:
                 push: true
                 platforms: linux/amd64
                 # tags: ${{ github.actor }}/bsn-ui:${{ steps.extract_version.outputs.VERSION }},${{ github.actor }}/bsn-ui:latest
-                tags: ghcr.io/inputStr.toLowerCase(${{ github.actor }})/bsn-ui:latest
+                tags: ghcr.io/karimdevwm/bsn-ui:latest
             
     deploy:
         name: Deploy Frontend
