@@ -13,7 +13,7 @@ on:
 jobs:
     build-image:
         name: Build Frontend Docker image
-        runs-on: self-hosted
+        runs-on: ubuntu-latest
         steps:
             - name: checkout code
               uses: actions/checkout@v4
