@@ -42,28 +42,19 @@ jobs:
                 tags: ghcr.io/karimdevwm/bsn-ui:latest
             
     deploy:
-        name: Deploy Frontend
+        needs: build-image
+        name: deploy image
         runs-on: ubuntu-latest
-        needs: [build-image]
+
         steps:
         - name: install ssh keys
-          # check this thread tounderstand why its needed:
-          # <https://stackoverflow.com/a/70447517
+        # check this thread tounderstand why its needed:
+        # <https://stackoverflow.com/a/70447517
           run: |
             install -m 600 -D /dev/null ~/.ssh/id_rsa
             echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
             ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
-
-        - name: Create deployment folder
-          run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p ci-cd"
-        
-        - name: Copy docker-compose file
-          run: scp docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:ci-cd/docker-compose.yml
-
-        - name: Set environment variables and deploy
-          run: |
-            ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} <<EOF
-            cd ci-cd
-            docker-compose -f dock-compose.yml pull -q
-            docker-compose -f dock-compose.yml up -d
-            EOF
+        - name: connect and pull
+          run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && docker compose up -d && exit"
+        - name: cleanup
+          run: rm -rf ~/.ssh
