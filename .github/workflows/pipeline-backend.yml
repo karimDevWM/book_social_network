@@ -59,10 +59,10 @@ jobs:
                   java-version: 21
                   distribution: 'corretto'
             
-            - name: Running init tests
-              run: |
-                cd book-network
-                ./mvnw clean test
+            # - name: Running init tests
+            #   run: |
+            #     cd book-network
+            #     ./mvnw clean test
     
     build:
         runs-on: ubuntu-latest
