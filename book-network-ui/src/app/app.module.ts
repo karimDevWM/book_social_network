@@ -11,6 +11,7 @@ import { ActivateAccountComponent } from './pages/activate-account/activate-acco
 import { CodeInputModule } from 'angular-code-input';
 import { httpTokenInterceptor } from './services/interceptor/http-token.interceptor';
 import { ManageBookComponent } from './modules/book/pages/manage-book/manage-book.component';
+import { ApiModule } from './services/api.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ManageBookComponent } from './modules/book/pages/manage-book/manage-boo
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    CodeInputModule
+    CodeInputModule,
+    ApiModule.forRoot({rootUrl: 'http://85.215.234.70:8088/api/v1'})
   ],
   providers: [
     HttpClient,
