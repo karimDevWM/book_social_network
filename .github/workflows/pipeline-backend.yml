@@ -101,6 +101,35 @@ jobs:
                     password: ${{secrets.GITHUB_TOKEN}}
                 
                 - name: 'Build Inventory Image'
-                  run: |
-                    docker build --no-cache . --tag ghcr.io/karimdevwm/book-network:latest
-                    docker push ghcr.io/karimdevwm/book-network:latest
+                  uses: docker/build-push-action@v5
+                  with:
+                    context: book-network
+                    file: docker/backend/Dockerfile
+                    push: true
+                    platforms: linux/amd64
+                    tags: ${{ github.actor }}/bsn-api:${{ steps.extract_version.outputs.VERSION }},${{ github.actor }}/bsn-api:latest
+                    build-args: |
+                      PROFILE=dev
+                      APP_version=${{ steps.extract_version.outputs.VERSION }}
+      
+    deploy:
+      name: Deploy Backend
+      runs-on: self-hosted
+      needs: [build-image]
+      steps:
+        - name: Create deployment folder
+          run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p ci-cd"
+        
+        - name: Copy docker-compose file
+          run: scp docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:ci-cd/docker-compose.yml
+
+        - name: Set environment variables and deploy
+          run: |
+            ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} <<EOF
+            export EMAIL_HOSTNAME=${{ secrets.EMAIL_HOSTNAME }} 
+            export EMAIL_USERNAME=${{ secrets.EMAIL_USERNAME }}
+            export EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}
+            cd ci-cd
+            docker-compose -f dock-compose.yml pull -q
+            docker-compose -f dock-compose.yml up -d
+            EOF
