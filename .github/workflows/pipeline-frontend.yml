@@ -38,7 +38,8 @@ jobs:
                 file: docker/frontend/Dockerfile
                 push: true
                 platforms: linux/amd64
-                tags: ${{ github.actor }}/bsn-ui:${{ steps.extract_version.outputs.VERSION }},${{ github.actor }}/bsn-ui:latest
+                # tags: ${{ github.actor }}/bsn-ui:${{ steps.extract_version.outputs.VERSION }},${{ github.actor }}/bsn-ui:latest
+                tags: ${{ github.actor }}/bsn-ui:${{ github.actor }}/bsn-ui:latest
             
     deploy:
         name: Deploy Frontend
