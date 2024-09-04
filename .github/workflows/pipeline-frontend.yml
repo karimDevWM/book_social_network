@@ -49,7 +49,7 @@ jobs:
             echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         # Recommended approach (permanent)
         - name: Add VPS fingerprint (one-time setup)
-          run: ssh ***@*** -o StrictHostKeyChecking=yes | ssh-keyscan *** >> ~/.ssh/known_hosts
+          run: ssh ${{ secrets.SSH_USER}}@${{ secrets.SSH_HOST }} -o StrictHostKeyChecking=yes | ssh-keyscan *** >> ~/.ssh/known_hosts
         - name: connect and pull
           run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && sudo docker compose up -d && exit"
         - name: cleanup
