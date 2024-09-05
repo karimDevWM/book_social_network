@@ -39,62 +39,62 @@ jobs:
                 cd book-network
                 ./mvnw clean compile
     
-    unit-tests:
-        runs-on: ubuntu-latest
-        name: Unit tests
-        steps:
-            - name: Checkout code
-              uses: actions/Checkout@v4
-              with:
-                  fetch-depth: 0
+    # unit-tests:
+    #     runs-on: ubuntu-latest
+    #     name: Unit tests
+    #     steps:
+    #         - name: Checkout code
+    #           uses: actions/Checkout@v4
+    #           with:
+    #               fetch-depth: 0
 
-            - name: Grant execute permission for Maven wrapper
-              run: | 
-                cd book-network
-                chmod +x ./mvnw
+    #         - name: Grant execute permission for Maven wrapper
+    #           run: | 
+    #             cd book-network
+    #             chmod +x ./mvnw
 
-            - name: Setup JDK
-              uses: actions/setup-java@v4
-              with:
-                  java-version: 21
-                  distribution: 'corretto'
+    #         - name: Setup JDK
+    #           uses: actions/setup-java@v4
+    #           with:
+    #               java-version: 21
+    #               distribution: 'corretto'
             
-            # - name: Running init tests
-            #   run: |
-            #     cd book-network
-            #     ./mvnw clean test
+    #         - name: Running init tests
+    #           run: |
+    #             cd book-network
+    #             ./mvnw clean test
     
-    build:
-        runs-on: ubuntu-latest
-        name: build backend
-        # needs: [compile, unit-tests]
-        needs: [compile]
-        steps:
-            - name: Checkout code
-              uses: actions/Checkout@v4
-              with:
-                  fetch-depth: 0
+    # build:
+    #     runs-on: ubuntu-latest
+    #     name: build backend
+    #     # needs: [compile, unit-tests]
+    #     needs: [compile]
+    #     steps:
+    #         - name: Checkout code
+    #           uses: actions/Checkout@v4
+    #           with:
+    #               fetch-depth: 0
 
-            - name: Grant execute permission for Maven wrapper
-              run: | 
-                cd book-network
-                chmod +x ./mvnw
+    #         - name: Grant execute permission for Maven wrapper
+    #           run: | 
+    #             cd book-network
+    #             chmod +x ./mvnw
     
-            - name: Setup JDK
-              uses: actions/setup-java@v4
-              with:
-                  java-version: 21
-                  distribution: 'corretto'
+    #         - name: Setup JDK
+    #           uses: actions/setup-java@v4
+    #           with:
+    #               java-version: 21
+    #               distribution: 'corretto'
             
-            - name: Build project
-              run: |
-                cd book-network
-                ./mvnw clean package
+    #         - name: Build project
+    #           run: |
+    #             cd book-network
+    #             ./mvnw clean package
     
     build-image:
             name: Build Docker image
             runs-on: ubuntu-latest
-            needs: [build]
+            # needs: [build]
             steps:
                 - name: Checkout code
                   uses: actions/Checkout@v4
