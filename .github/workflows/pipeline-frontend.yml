@@ -1,4 +1,4 @@
-name: Angular app Build and Deploy
+name: Angular app Build and Deploy - ghp
 
 on:
   push:
