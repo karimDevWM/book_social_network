@@ -18,7 +18,7 @@ jobs:
           node-version: 20
 
       - name: Build Angular app to prod
-        working-directory: book-social-network-ui
+        working-directory: book-network-ui
         run: npm install && npm run build:prod
 
       - name: Deploy to GitHub Pages
