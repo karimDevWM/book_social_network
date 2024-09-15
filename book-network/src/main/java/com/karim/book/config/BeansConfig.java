@@ -1,13 +1,10 @@
 package com.karim.book.config;
 
 import java.util.Arrays;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -25,10 +22,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BeansConfig {
 
-    private final UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService = null;
 
-    @Value("${application.cors.origins:*}")
-    private List<String> allowedOrigins;
+    // @Value("${application.cors.origins:*}")
+    // private List<String> allowedOrigins;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -59,7 +56,7 @@ public class BeansConfig {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
         // config.setAllowCredentials(true);
-        config.setAllowedOrigins(allowedOrigins);
+        config.addAllowedOrigin("*");
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowedMethods( Arrays.asList("*"));
         source.registerCorsConfiguration("/**", config);
