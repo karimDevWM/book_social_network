@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BeansConfig {
 
-    private final UserDetailsService userDetailsService = null;
+    private final UserDetailsService userDetailsService;
 
     // @Value("${application.cors.origins:*}")
     // private List<String> allowedOrigins;
