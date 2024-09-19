@@ -56,7 +56,7 @@ public class BeansConfig {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
         // config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
+        config.setAllowedOrigins(Arrays.asList("*"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowedMethods( Arrays.asList("*"));
         source.registerCorsConfiguration("/**", config);
